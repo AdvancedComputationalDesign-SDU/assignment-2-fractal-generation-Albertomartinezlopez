@@ -59,20 +59,15 @@
 
 ## Technical Explanation
 
-*(Provide a concise explanation of your code, focusing on recursion and geometric manipulations. Discuss how your approach generates the final fractal pattern and the mathematical principles involved.)*
+To create the coral pattern, I began by defining a recursive function, generate_edgy_coral, that took in several parameters: point for the starting position, angle for direction, length, depth level, max_depth for recursion limit, and branch_width. At the start of each call, I checked if the depth exceeded max_depth or if the branch_width was too narrow (less than 0.1); if either condition was met, I used a return statement to stop further recursion.
 
-Example:
+Within each branch creation, I defined multiple control points by iterating through num_midpoints and adding slight random angle adjustments. I calculated each midpoint using trigonometric functions (math.cos and math.sin) for realistic curvature, appending each point to a list, control_points. After adding the endpoint with a small angle variation, I used LineString(control_points) from Shapely to create a curved line that represented the branch’s path. Using branch_line.buffer(branch_width, cap_style=2), I wrapped this line in a polygon outline.
 
-In my implementation, the `generate_fractal` function recursively draws line segments representing branches of a fractal tree. The function calculates the end point of each line using trigonometric functions based on the current angle and length.
+For visual depth, I applied a color gradient from plt.cm.plasma based on the depth divided by max_depth, and filled each branch using plt.fill. If branch_polygon was valid and non-empty, I retrieved its exterior.xy to extract the x and y coordinates for plotting.
 
-At each recursion step, the function:
+Next, I adjusted length and branch_width by multiplying each by a constant (0.9 and 0.7, respectively) for a natural tapering effect. I also used a random angle variation with random.uniform(-10, 10) to create two recursive calls for the left and right branches with adjusted angles.
 
-- Decreases the `length` by multiplying it with `length_scaling_factor`.
-- Adjusts the `angle` by adding or subtracting `angle_change` to create branching.
-- Calls itself recursively for each branch until the `recursion_depth` reaches zero.
-
-This approach creates a self-similar pattern characteristic of fractals, where each branch splits into smaller branches in a consistent manner.
-
+In the main code, I initialized parameters like start_point, initial_angle, initial_length, max_depth, and initial_branch_width. I set up a plotting area with plt.figure, called generate_edgy_coral to start the recursive pattern, and used plt.show() to display the resulting fractal, which featured organic, branching coral shapes with smooth color gradients and tapered branches.
 ---
 
 ## Results
