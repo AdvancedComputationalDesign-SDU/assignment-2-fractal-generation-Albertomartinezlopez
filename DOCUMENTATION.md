@@ -12,44 +12,48 @@
 
 ## Pseudo-Code
 
-*(Provide detailed pseudo-code explaining the logic of your program. This should clearly outline your recursive functions, parameter definitions, and how they contribute to the final fractal pattern.)*
 
-Example:
+1. Import necessary libraries: matplotlib, math, random, and shapely.
 
-1. **Define Main Function `generate_fractal(start_point, angle, length, depth)`**
-   - **Inputs**:
-     - `start_point`: Tuple of coordinates (x, y).
-     - `angle`: Current angle in degrees.
-     - `length`: Length of the current line segment.
-     - `depth`: Current recursion depth.
-   - **Process**:
-     - **If** `depth` is 0:
-       - **Return** (End recursion).
-     - **Else**:
-       - Calculate `end_point` using trigonometry:
-         - `end_x = start_x + length * cos(radians(angle))`
-         - `end_y = start_y + length * sin(radians(angle))`
-       - Create a line from `start_point` to `end_point` using Shapely.
-       - **For** each branch (e.g., left and right):
-         - **Calculate** new angle:
-           - Left branch: `new_angle = angle + angle_change`
-           - Right branch: `new_angle = angle - angle_change`
-         - **Calculate** new length:
-           - `new_length = length * length_scaling_factor`
-         - **Recursive Call**:
-           - `generate_fractal(end_point, new_angle, new_length, depth - 1)`
-     - **Return** (After recursive calls).
+2. Define a function `generate_edgy_coral` with parameters:
+   - `point`: Starting coordinate of the branch.
+   - `angle`: Initial direction of the branch in degrees.
+   - `length`: Length of the current branch.
+   - `depth`: Current recursion level.
+   - `max_depth`: Maximum recursion level allowed.
+   - `branch_width`: Width of the branch.
 
-2. **Initialize Parameters**
-   - Set `start_point`, `initial_angle`, `initial_length`, `recursion_depth`, `angle_change`, `length_scaling_factor`.
+3. Check if `depth` exceeds `max_depth` or if `branch_width` is less than a threshold.
+   - If so, stop further recursion.
 
-3. **Call `generate_fractal` Function**
-   - Begin the fractal generation by calling `generate_fractal(start_point, initial_angle, initial_length, recursion_depth)`.
+4. Define control points for creating a curved path:
+   - Start with `point` as the first control point.
+   - Calculate additional control points based on `angle`, `length`, and small random variations.
+   - Calculate the final endpoint with a small angle variation.
+   
+5. Create a line for the branch using `LineString` with the control points.
+   - Create a polygon outline around this line with `branch_width`.
 
-4. **Visualization**
-   - Collect all the lines generated.
-   - Use Matplotlib to plot the lines.
-   - Apply any visualization enhancements (colors, line widths).
+6. Set branch color based on the `depth` to create a color gradient effect.
+
+7. If the polygon is valid, plot it using `matplotlib` with filled color.
+
+8. Reduce `length` and `branch_width` for tapering effect:
+   - Calculate `new_length` as `length * 0.9`.
+   - Calculate `new_branch_width` as `branch_width * 0.7`.
+
+9. Apply a small random angle variation for natural appearance.
+
+10. Recursively call `generate_edgy_coral` twice to create two new branches:
+    - One at `angle + 25 + angle_variation`.
+    - Another at `angle - 25 + angle_variation`.
+
+11. In the main execution:
+    - Set the starting point, initial angle, initial branch length, max depth, and branch width.
+    - Initialize a plotting area with `matplotlib`.
+    - Call `generate_edgy_coral` with initial parameters.
+    - Display the plot.
+
 
 ---
 
