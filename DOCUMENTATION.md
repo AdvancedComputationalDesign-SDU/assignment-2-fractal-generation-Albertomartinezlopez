@@ -68,6 +68,7 @@ For visual depth, I applied a color gradient from plt.cm.plasma based on the dep
 Next, I adjusted length and branch_width by multiplying each by a constant (0.9 and 0.7, respectively) for a natural tapering effect. I also used a random angle variation with random.uniform(-10, 10) to create two recursive calls for the left and right branches with adjusted angles.
 
 In the main code, I initialized parameters like start_point, initial_angle, initial_length, max_depth, and initial_branch_width. I set up a plotting area with plt.figure, called generate_edgy_coral to start the recursive pattern, and used plt.show() to display the resulting fractal, which featured organic, branching coral shapes with smooth color gradients and tapered branches.
+
 ---
 
 ## Results
